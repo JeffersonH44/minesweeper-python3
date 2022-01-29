@@ -1,18 +1,17 @@
 import random
 
 def ponerMinas(minas, tablero):
-    minas = tablero["minas"]
+    tablero_minas = tablero["minas"]
     filas = tablero["filas"]
     columnas = tablero["columnas"]
 
-    counter = 0 
+    counter = 0
     while counter < minas:
-        rand_fila = random.randint(0, filas)
-        rand_col = random.randint(0, columnas)
-        if minas[rand_fila][rand_col] == 1:
+        rand_fila = random.randint(0, filas - 1)
+        rand_col = random.randint(0, columnas - 1)
+        if tablero_minas[rand_fila][rand_col] == 1:
             continue
-
-        minas[rand_fila][rand_col] = 1
+        tablero_minas[rand_fila][rand_col] = 1
         counter += 1
 
 
@@ -35,6 +34,7 @@ def imprimirTablero(tablero):
     
 def run():
     tablero = crearTablero(9, 9)
+    ponerMinas(9, tablero)
     imprimirTablero(tablero)
 
 
