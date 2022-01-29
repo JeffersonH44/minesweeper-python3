@@ -49,7 +49,7 @@ def crearMatriz(filas, columnas, valor=0):
 
 def crearTablero(filas, columnas):
     tablero_minas = crearMatriz(filas, columnas)
-    tablero_mostrar = crearMatriz(filas, columnas, valor="x")
+    tablero_mostrar = crearMatriz(filas, columnas, valor="-")
 
     tablero = {
         "minas": tablero_minas,
@@ -60,9 +60,12 @@ def crearTablero(filas, columnas):
 
     return tablero
 
-def imprimirTablero(tablero):
-    for elem in tablero["minas"]:
+def imprimirTablero(tablero, test=False):
+    for elem in tablero["mostrar"]:
         print(elem)
+    if test:
+        for elem in tablero["minas"]:
+            print(elem)
 
 def crearJuego(filas, columnas, total_minas=10):
     tablero = crearTablero(filas, columnas)
@@ -78,7 +81,24 @@ def obtenerEntero(mensaje):
         except:
             print(f"Debes introducir un entero, intentalo de nuevo")
 
+def mostrarMinas(tablero):
+    tablero_minas = tablero["minas"]
+    tablero_mostrar = tablero["mostrar"]
+    filas = tablero["filas"]
+    columnas = tablero["columnas"]
 
+    for i in range(filas):
+        for j in range(columnas):
+            if tablero_minas[i][j] == -1:
+                tablero_mostrar[i][j] = "x"
+
+
+def realizarAccion(fila, columna, tablero):
+    tablero_minas = tablero["minas"]
+    if tablero_minas[fila][columna] == -1:
+        mostrarMinas(tablero)
+        return False
+    return True
 
 def obtenerDatos():
     fila = obtenerEntero("Introduce la fila:")
@@ -89,9 +109,11 @@ def run():
     tablero = crearJuego(9, 9)
     is_playing = True
     while is_playing:
-        imprimirTablero(tablero)
+        imprimirTablero(tablero, test=True)
         fila, columna = obtenerDatos()
-        print(fila, columna)
+        is_playing = realizarAccion(fila, columna, tablero)
+    imprimirTablero(tablero)
+    print("Perdiste!")
 
 
 
