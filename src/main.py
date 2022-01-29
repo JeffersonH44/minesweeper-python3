@@ -63,12 +63,36 @@ def crearTablero(filas, columnas):
 def imprimirTablero(tablero):
     for elem in tablero["minas"]:
         print(elem)
-    
-def run():
-    tablero = crearTablero(9, 9)
-    ponerMinas(9, tablero)
+
+def crearJuego(filas, columnas, total_minas=10):
+    tablero = crearTablero(filas, columnas)
+    ponerMinas(total_minas, tablero)
     contarMinasVecinas(tablero)
-    imprimirTablero(tablero)
+    return tablero
+
+def obtenerEntero(mensaje):
+    while True:
+        try:
+            valor = int(input(mensaje))
+            return valor
+        except:
+            print(f"Debes introducir un entero, intentalo de nuevo")
+
+
+
+def obtenerDatos():
+    fila = obtenerEntero("Introduce la fila:")
+    columna = obtenerEntero("Introduce la columna:")
+    return (fila, columna)
+
+def run():
+    tablero = crearJuego(9, 9)
+    is_playing = True
+    while is_playing:
+        imprimirTablero(tablero)
+        fila, columna = obtenerDatos()
+        print(fila, columna)
+
 
 
 if __name__ == "__main__":
